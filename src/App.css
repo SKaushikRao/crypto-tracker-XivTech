@@ -1,38 +1,323 @@
-.App {
-  text-align: center;
+/* App Header Styles */
+.app-header {
+  background: linear-gradient(to right, #f1e7e7, #516596);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-header h1 {
+  font-weight: 700;
+  background: linear-gradient(to right, #1360be, #e3e2e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.25rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.app-header p {
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Main content area */
+.content-wrapper {
+  padding: 2rem 0;
+}
+
+/* Card styling */
+.crypto-card {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.crypto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Table styling */
+.crypto-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+.crypto-table th {
+  background-color: var(--table-header-bg);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 2px solid var(--table-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.crypto-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--table-border);
+  vertical-align: middle;
+}
+
+.crypto-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.crypto-table tbody tr:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Crypto logo and name styling */
+.crypto-name-cell {
+  display: flex;
+  align-items: center;
+}
+
+.crypto-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.crypto-row:hover .crypto-logo {
+  transform: scale(1.15);
+}
+
+.crypto-name {
+  font-weight: 600;
+}
+
+.crypto-symbol {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-left: 0.5rem;
+}
+
+/* Price change indicators */
+.price-change {
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  display: inline-block;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.price-change-positive {
+  color: var(--success-color);
+  background-color: var(--success-bg);
+}
+
+.price-change-negative {
+  color: var(--danger-color);
+  background-color: var(--danger-bg);
+}
+
+.crypto-row:hover .price-change {
+  transform: scale(1.05);
+}
+
+/* Price flash animation */
+@keyframes priceFlashGreen {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(16, 185, 129, 0.2); }
+  100% { background-color: transparent; }
+}
+
+@keyframes priceFlashRed {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(239, 68, 68, 0.2); }
+  100% { background-color: transparent; }
+}
+
+.price-flash-green {
+  animation: priceFlashGreen 1s ease;
+}
+
+.price-flash-red {
+  animation: priceFlashRed 1s ease;
+}
+
+/* Sparkline chart container */
+.sparkline-container {
+  width: 160px;
+  height: 60px;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.crypto-row:hover .sparkline-container {
+  transform: scale(1.1);
+}
+
+/* Footer styling */
+.app-footer {
+  background-color: #ccdaf7;
+  border-top: 1px solid #e5e7eb;
+  padding: 1.5rem 0;
+}
+
+.app-footer p {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .crypto-table th,
+  .crypto-table td {
+    padding: 0.75rem 1rem;
+  }
+  
+  .sparkline-container {
+    width: 120px;
+    height: 50px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  
+  .crypto-table th,
+  .crypto-table td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .sparkline-container {
+    width: 100px;
+    height: 40px;
+  }
 }
 
-.App-link {
-  color: #61dafb;
+/* Loading animation */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-@keyframes App-logo-spin {
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error message */
+.error-message {
+  color: var(--danger-color);
+  background-color: var(--danger-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+/* Add these styles to your existing App.css file */
+
+/* General animations */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(20px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+/* Button hover effects */
+.btn-hover-effect {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-hover-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.btn-hover-effect:hover::after {
+  transform: translateX(0);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, #5079ba, #e2e0e6, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+  animation: gradientText 5s ease infinite;
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2563eb, #7c3aed);
 }
